@@ -1,0 +1,60 @@
+# server
+server:
+    port:8080
+    address:127.0.0.1
+
+#database
+datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/canary?characterEncoding=utf-8&amp;autoReconnect=true
+    username: root
+    password: root
+    testOnBorrow: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 7200000
+
+# spring
+spring:
+    http:
+        encoding.charset: UTF-8
+        encoding.enable: true
+        encoding.force: true
+
+# mybatis
+mybatis:
+    typeAliasesPackage: com.sunny.**.model
+    mapperLocations: classpath:/mybatis/**Mapper.xml
+    configLocation: classpath:/mybatis/mybatis-config.xml
+
+#thead pool
+pool:
+    corePoolSize: 10
+    maxPoolSize: 20
+    keepAliveSeconds: 60
+
+# log
+logging:
+    level:
+       com.ibatis:DEBUG
+
+#mail
+mail:
+    host: smtp.126.com
+    port: 465
+    protocol: smtp
+    defaultEncoding: UTF-8
+    username: maxiaoshuai2588@126.com
+    password: xiaozhi888+
+    from: maxiaoshuai2588
+
+
+
+
+
+
+
+
+
+
+
+
