@@ -3,6 +3,9 @@ package com.sunny.service;
 import com.sunny.dao.UserDao;
 import com.sunny.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -24,13 +27,17 @@ public class UserService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+//    @Autowired
+//    private CacheManager cacheManager;
+
     @Autowired
     private ThreadPoolTaskExecutor executor;
 
+    @Cacheable(value = "",key = "'_key' + #id")
     public UserModel selectById(Integer id) {
         UserModel result = new UserModel();
 
-        result.setId(1);
+        result.setId(1L);
         result.setUsername("tom");
         result.setPassword("jack");
 
@@ -44,10 +51,12 @@ public class UserService {
             }
         });
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("maxiaoshuai2588@126.com");
-        message.setText("您好 by spring boot");
-        javaMailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo("maxiaoshuai2588@126.com");
+//        message.setText("您好 by spring boot");
+//        javaMailSender.send(message);
+
+//        Cache cache =  cacheManager.getCache("default");
 
         return result;
     }
