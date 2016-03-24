@@ -25,4 +25,8 @@
 		<setting name="defaultStatementTimeout" value="25000" />
 	</settings>
 
+	<mappers>
+		<mapper resource="mybatis/UserMapper.xml"/>
+	</mappers>
+
 </configuration>
