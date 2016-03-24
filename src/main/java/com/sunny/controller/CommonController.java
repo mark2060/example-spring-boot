@@ -1,5 +1,6 @@
 package com.sunny.controller;
 
+import com.sunny.mail.Mail;
 import com.sunny.model.UserModel;
 import com.sunny.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2015-08-04
  */
 @RestController
-public class UserController {
+public class CommonController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user/select", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    private Mail mail;
+
+    @RequestMapping(value = "/mail", method = RequestMethod.GET)
+    public void mail() {
+        mail.sendMail();
+    }
+
+
+    @RequestMapping(value = "/selectUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel select(Integer id) {
 
         return userService.selectById(id);
