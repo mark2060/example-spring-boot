@@ -1,6 +1,5 @@
 package com.sunny.controller;
 
-import com.sunny.cache.GuavaCache;
 import com.sunny.model.UserModel;
 import com.sunny.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,6 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private GuavaCache guavaCache;
-
     @RequestMapping(value = "/mail", method = RequestMethod.GET)
     public void mail() {
         userService.sendMail();
@@ -34,7 +30,7 @@ public class CommonController {
 
     @RequestMapping(value = "/selectMenu", method = RequestMethod.GET)
     public List<String> selectMenu() {
-       return guavaCache.selectMenu();
+       return userService.selectMenu();
     }
 
     @RequestMapping(value = "/selectUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
