@@ -49,7 +49,7 @@ public class CommonController {
      */
     @RequestMapping(value = "/selectUserFromCache", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel selectUserFromCache(Long id) {
-        return userService.selectById(id);
+        return userService.selectUserFromCache(id);
     }
 
     /**

@@ -72,10 +72,8 @@ public class UserService {
      * @return 结果
      */
     @Cacheable(value = "guavaCache", key = "'_key' + #id")
-    public UserModel selectById(Long id) {
-        UserModel model = new UserModel();
-        model.setId(id);
-        return userMapper.selectById(model);
+    public UserModel selectUserFromCache(Long id) {
+        return userDao.selectUserById(id);
     }
 
     /**
@@ -85,7 +83,9 @@ public class UserService {
      * @return 结果
      */
     public UserModel selectUserById(Long id) {
-        return userDao.selectUserById(id);
+        UserModel model = new UserModel();
+        model.setId(id);
+        return userMapper.selectById(model);
     }
 
 }
