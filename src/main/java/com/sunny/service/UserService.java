@@ -73,15 +73,9 @@ public class UserService {
      */
     @Cacheable(value = "guavaCache", key = "'_key' + #id")
     public UserModel selectById(Long id) {
-        UserModel result = new UserModel();
-
-        result.setId(id);
-        result.setUsername("tom");
-        result.setPassword("jack");
-
-        Long count = userDao.selectCount();
-        System.out.println("count is " + count);
-        return result;
+        UserModel model = new UserModel();
+        model.setId(id);
+        return userDao.selectById(model);
     }
 
 }

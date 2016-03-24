@@ -98,50 +98,13 @@
 
     <select id="select" parameterType="com.sunny.model.UserModel" resultType="com.sunny.model.UserModel">
         select
-        id,nickname,username,password,question,answer,role,sign,email,mobile,qq,sex,age,birthday,image,binding_mobile_status
-        as bindingMobileStatus,binding_email_status as bindingEmailStatus,login_fail_times as loginFailTimes,enable_status as
-        enableStatus,delete_status as deleteStatus,operator,operate_time as operateTime,creator,create_time as createTime
+        id,username,password,birthday,create_time as createTime
         from t_user
         <where>
-            delete_status = 'NOT_DELETE'
             <if test="id != null">
                 and id = #{id}
             </if>
-            <if test="username != null">
-                and username = #{username}
-            </if>
-            <if test="password != null">
-                and password = #{password}
-            </if>
-            <if test="question != null">
-                and question = #{question}
-            </if>
-            <if test="answer != null">
-                and answer = #{answer}
-            </if>
-            <if test="role != null">
-                and role = #{role}
-            </if>
-            <if test="email != null">
-                and email = #{email}
-            </if>
-            <if test="mobile != null">
-                and mobile = #{mobile}
-            </if>
-            <if test="qq != null">
-                and qq = #{qq}
-            </if>
-            <if test="sex != null">
-                and sex = #{sex}
-            </if>
-            <if test="age != null">
-                and age = #{age}
-            </if>
         </where>
-        order by id
-        <if test="offset != null and count != null">
-            limit #{offset},#{count}
-        </if>
     </select>
 
     <!--查询总数-->

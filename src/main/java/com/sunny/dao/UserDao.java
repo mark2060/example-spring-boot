@@ -1,5 +1,6 @@
 package com.sunny.dao;
 
+import com.sunny.model.UserModel;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,11 +22,12 @@ public class UserDao {
     @Autowired
     public JdbcTemplate jdbcTemplate;
 
-    public Long selectCount(){
-        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.selectTotalCount");
+    public UserModel selectById(UserModel model){
+        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select",model);
     }
 
-    public Long selectCount2(){
+    public Long selectCount(){
         return jdbcTemplate.queryForObject("select count(1) from t_user", Long.class);
     }
+
 }

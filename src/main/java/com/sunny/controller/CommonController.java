@@ -27,14 +27,33 @@ public class CommonController {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 发送邮件
+     */
     @RequestMapping(value = "/mail", method = RequestMethod.GET)
     public void mail() {
         userService.sendMail();
     }
 
+    /**
+     * 查询菜单
+     *
+     * @return 结果
+     */
     @RequestMapping(value = "/selectMenu", method = RequestMethod.GET)
     public List<String> selectMenu() {
         return userService.selectMenu();
+    }
+
+    /**
+     * 查询用户
+     *
+     * @param id id
+     * @return 结果
+     */
+    @RequestMapping(value = "/selectUserFromCache", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserModel selectUserFromCache(Long id) {
+        return userService.selectById(id);
     }
 
     /**
@@ -45,12 +64,6 @@ public class CommonController {
     @RequestMapping(value = "/selectUserById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel selectUserById(Long id) {
         return userMapper.selectUserById(id);
-    }
-
-    @RequestMapping(value = "/selectUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserModel select(Long id) {
-
-        return userService.selectById(id);
     }
 
 }
