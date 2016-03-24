@@ -1,5 +1,6 @@
 package com.sunny.controller;
 
+import com.sunny.dao.UserMapper;
 import com.sunny.model.UserModel;
 import com.sunny.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class CommonController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserMapper userMapper;
+
     @RequestMapping(value = "/mail", method = RequestMethod.GET)
     public void mail() {
         userService.sendMail();
@@ -30,7 +34,17 @@ public class CommonController {
 
     @RequestMapping(value = "/selectMenu", method = RequestMethod.GET)
     public List<String> selectMenu() {
-       return userService.selectMenu();
+        return userService.selectMenu();
+    }
+
+    /**
+     * 查询用户数，use mybatis annotation
+     *
+     * @return 数量
+     */
+    @RequestMapping(value = "/selectUserById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserModel selectUserById(Long id) {
+        return userMapper.selectUserById(id);
     }
 
     @RequestMapping(value = "/selectUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
