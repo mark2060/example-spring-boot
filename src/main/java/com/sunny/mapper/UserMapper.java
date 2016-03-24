@@ -23,7 +23,7 @@ public class UserMapper {
     public JdbcTemplate jdbcTemplate;
 
     public UserModel selectById(UserModel model){
-        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserDao.select",model);
+        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select",model);
     }
 
     public Long selectCount(){
