@@ -1,33 +1,19 @@
 package com.sunny.dao;
 
 import com.sunny.model.UserModel;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * UserDao
  *
  * @author sunny
  * @version 1.0.0
- * @since 2015-08-04
+ * @since 2016-03-24
  */
-@Repository
-public class UserDao {
+public interface UserDao {
 
-    @Autowired
-    private SqlSessionTemplate sqlSessionTemplate;
-
-    @Autowired
-    public JdbcTemplate jdbcTemplate;
-
-    public UserModel selectById(UserModel model){
-        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select",model);
-    }
-
-    public Long selectCount(){
-        return jdbcTemplate.queryForObject("select count(1) from t_user", Long.class);
-    }
+    @Select("select id,username,password,birthday,create_time as createTime from t_user where id = #{id}")
+    public UserModel selectUserById(@Param("id") Long id);
 
 }

@@ -1,6 +1,5 @@
 package com.sunny.controller;
 
-import com.sunny.dao.UserMapper;
 import com.sunny.model.UserModel;
 import com.sunny.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ public class CommonController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserMapper userMapper;
 
     /**
      * 发送邮件
@@ -63,7 +59,7 @@ public class CommonController {
      */
     @RequestMapping(value = "/selectUserById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel selectUserById(Long id) {
-        return userMapper.selectUserById(id);
+        return userService.selectUserById(id);
     }
 
 }

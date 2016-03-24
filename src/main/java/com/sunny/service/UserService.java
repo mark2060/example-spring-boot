@@ -2,6 +2,7 @@ package com.sunny.service;
 
 import com.google.common.collect.Lists;
 import com.sunny.dao.UserDao;
+import com.sunny.mapper.UserMapper;
 import com.sunny.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -9,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +25,9 @@ import java.util.List;
 public class UserService {
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private UserDao userDao;
 
     @Autowired
@@ -32,9 +35,6 @@ public class UserService {
 
     @Autowired
     private GuavaCacheManager guavaCacheManager;
-
-    @Autowired
-    private ThreadPoolTaskExecutor executor;
 
     /**
      * 发送邮件
@@ -75,7 +75,17 @@ public class UserService {
     public UserModel selectById(Long id) {
         UserModel model = new UserModel();
         model.setId(id);
-        return userDao.selectById(model);
+        return userMapper.selectById(model);
+    }
+
+    /**
+     * use mybatis annotation
+     *
+     * @param id id
+     * @return 结果
+     */
+    public UserModel selectUserById(Long id) {
+        return userDao.selectUserById(id);
     }
 
 }
