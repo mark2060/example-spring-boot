@@ -1,8 +1,14 @@
 package com.sunny.task;
 
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * ClockTask
@@ -14,15 +20,15 @@ import org.springframework.util.StopWatch;
 @Component
 public class ClockTask {
 
-    @Scheduled(cron = "*/5 * * * * ?")
+    @Scheduled(cron = "*/10 * * * * ?")
     public void execute() {
         StopWatch stopWatch = new StopWatch();
 
         stopWatch.start();
         //do somethings
         stopWatch.stop();
-
-        System.out.println("ClockTask,execute,spend " + stopWatch.getTotalTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("ClockTask,execute,current time is  " + format.format(new Date()));
     }
 
 }
