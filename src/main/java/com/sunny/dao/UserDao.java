@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Select;
 public interface UserDao {
 
     @Select("select id,username,password,birthday,create_time as createTime from t_user where id = #{id}")
-    public UserModel selectUserById(@Param("id") Long id);
+    UserModel selectUserById(@Param("id") Long id);
 
 }

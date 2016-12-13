@@ -26,19 +26,34 @@ public class CommonController {
     /**
      * 发送邮件
      */
-    @RequestMapping(value = "/mail", method = RequestMethod.GET)
-    public void mail() {
+    @RequestMapping(value = "/mailExample", method = RequestMethod.GET)
+    public void mailExample() {
         userService.sendMail();
     }
 
     /**
-     * 查询菜单
+     * 缓存使用
      *
      * @return 结果
      */
-    @RequestMapping(value = "/selectMenu", method = RequestMethod.GET)
-    public List<String> selectMenu() {
-        return userService.selectMenu();
+    @RequestMapping(value = "/guavaCache", method = RequestMethod.GET)
+    public List<String> guavaCache() {
+        return userService.guavaCache();
+    }
+
+    /**
+     * 使用注解缓存
+     *
+     * @return 结果
+     */
+    @RequestMapping(value = "/cacheAnnotation", method = RequestMethod.GET)
+    public List<String> cacheAnnotation(Long userId) {
+        return userService.cacheAnnotation(userId,true);
+    }
+
+    @RequestMapping(value = "/cacheAnnotationf", method = RequestMethod.GET)
+    public List<String> cacheAnnotationf(Long userId) {
+        return userService.cacheAnnotation(userId,false);
     }
 
     /**

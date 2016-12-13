@@ -5,13 +5,16 @@ import com.sunny.dao.UserDao;
 import com.sunny.mapper.UserMapper;
 import com.sunny.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.guava.GuavaCache;
 import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -47,12 +50,7 @@ public class UserService {
         javaMailSender.send(message);
     }
 
-    /**
-     * 查询菜单，use guava cache
-     *
-     * @return 结果
-     */
-    public List<String> selectMenu() {
+    public List<String> guavaCache() {
         Cache cache = guavaCacheManager.getCache("guavaCache");
         List<String> menuList = cache.get("menu", List.class);
         if (menuList == null) {
@@ -62,6 +60,19 @@ public class UserService {
         } else {
             System.out.println("select menu from cache");
         }
+        return menuList;
+    }
+
+    /**
+     * 此处result为什么为null呢？
+     * @param userId
+     * @param useCache
+     * @return
+     */
+    @Cacheable(value = "guavaCache", key = "'application_menu_list_key_' + #userId", condition = "#useCache and #result == null")
+    public List<String> cacheAnnotation(Long userId,Boolean useCache) {
+        List<String> menuList = Lists.newArrayList("新闻", "娱乐", "科技", "游戏");
+        System.out.println("select menu from database.");
         return menuList;
     }
 
