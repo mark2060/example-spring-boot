@@ -48,12 +48,21 @@ public class CommonController {
      */
     @RequestMapping(value = "/cacheAnnotation", method = RequestMethod.GET)
     public List<String> cacheAnnotation(Long userId) {
-        return userService.cacheAnnotation(userId,true);
+        return userService.cacheAnnotation(userId, true);
     }
 
     @RequestMapping(value = "/cacheAnnotationf", method = RequestMethod.GET)
     public List<String> cacheAnnotationf(Long userId) {
-        return userService.cacheAnnotation(userId,false);
+        return userService.cacheAnnotation(userId, false);
+    }
+
+    /**
+     * 查询用户
+     * @return 结果
+     */
+    @RequestMapping(value = "/redis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void redis() {
+        userService.testRedis();
     }
 
     /**

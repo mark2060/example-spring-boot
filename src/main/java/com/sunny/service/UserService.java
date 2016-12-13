@@ -10,11 +10,15 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.guava.GuavaCache;
 import org.springframework.cache.guava.GuavaCacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -38,6 +42,9 @@ public class UserService {
 
     @Autowired
     private GuavaCacheManager guavaCacheManager;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 发送邮件
@@ -85,6 +92,39 @@ public class UserService {
     @Cacheable(value = "guavaCache", key = "'_key' + #id")
     public UserModel selectUserFromCache(Long id) {
         return userDao.selectUserById(id);
+    }
+
+    public void testRedis(){
+        System.out.println(get("abc"));
+
+        set("abc","efg");
+
+        System.out.println(get("abc"));
+    }
+
+    public Object get(final String key) {
+        Object result = null;
+        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+        result = operations.get(key);
+        return result;
+    }
+    /**
+     * 写入缓存
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean set(final String key, Object value) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
