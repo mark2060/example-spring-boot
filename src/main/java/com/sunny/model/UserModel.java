@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,13 +15,12 @@ import java.util.Date;
  * @since 2014-11-10
  */
 @SuppressWarnings(value = "unused")
-public class UserModel {
+public class UserModel implements Serializable{
 
     /**
      * 主键
      */
     private Long id;
-
 
     /**
      * 用户
