@@ -1,14 +1,11 @@
 package com.sunny.task;
 
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * ClockTask
