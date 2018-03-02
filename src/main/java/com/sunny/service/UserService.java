@@ -6,14 +6,15 @@ import com.sunny.mapper.UserMapper;
 import com.sunny.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,19 +27,19 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
-    @Autowired
+    @Resource
     private JavaMailSender javaMailSender;
 
-    @Autowired
-    private GuavaCacheManager guavaCacheManager;
+    @Resource
+    private CacheManager cacheManager;
 
-    @Autowired
+    @Resource
     private RedisTemplate redisTemplate;
 
     /**
@@ -53,7 +54,7 @@ public class UserService {
     }
 
     public UserModel guavaCache(Long userId) {
-        Cache cache = guavaCacheManager.getCache("guavaCache");
+        Cache cache = cacheManager.getCache("commonCache");
         String cacheKey = "application_user_" + userId;
         UserModel userModel = cache.get(cacheKey, UserModel.class);
         if (userModel == null) {
@@ -75,7 +76,7 @@ public class UserService {
      * @param useCache 是否使用缓存
      * @return 结果
      */
-    @Cacheable(value = "guavaCache", key = "'application_user_' + #userId", condition = "#useCache and #result == null")
+    @Cacheable(value = "commonCache", key = "'application_user_' + #userId", condition = "#useCache and #result == null")
     public UserModel cacheAnnotation(Long userId, Boolean useCache) {
         UserModel userModel = new UserModel();
         userModel.setId(userId);

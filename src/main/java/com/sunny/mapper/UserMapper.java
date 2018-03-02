@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
+
 /**
  * UserDao
  *
@@ -16,11 +18,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserMapper {
 
-    @Autowired
+    @Resource
     private SqlSessionTemplate sqlSessionTemplate;
 
-    @Autowired
-    public JdbcTemplate jdbcTemplate;
+    @Resource
+    private JdbcTemplate jdbcTemplate;
 
     public UserModel selectById(UserModel model){
         return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select",model);

@@ -1,0 +1,25 @@
+<config
+        xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd">
+
+    <cache-template name="cacheTemplate">
+        <resources>
+            <heap>2000</heap>
+            <offheap unit="MB">200</offheap>
+        </resources>
+    </cache-template>
+
+    <cache alias="commonCache" uses-template="cacheTemplate">
+        <expiry>
+            <ttl>40</ttl>
+        </expiry>
+    </cache>
+
+    <cache alias="customCache" uses-template="cacheTemplate">
+        <expiry>
+            <ttl>40</ttl>
+        </expiry>
+    </cache>
+
+</config>
