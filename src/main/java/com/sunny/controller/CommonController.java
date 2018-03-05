@@ -2,6 +2,8 @@ package com.sunny.controller;
 
 import com.sunny.model.UserModel;
 import com.sunny.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
  * @version 1.0.0
  * @since 2015-08-04
  */
+@Api(value = "交警业务接口类", tags = "交警6合1业务接口", description = "主要任务和交警的专网通信")
 @RestController
 public class CommonController {
 
@@ -34,9 +37,19 @@ public class CommonController {
     /**
      * 缓存使用
      */
+    @ApiOperation(value = "检查用户账号接口", notes = "检查该用户是否在6合1系统中存在", produces = "application/json")
     @RequestMapping(value = "/guavaCache", method = RequestMethod.GET)
     public UserModel guavaCache(Long userId) {
         return userService.guavaCache(userId);
+    }
+
+    /**
+     * 缓存使用
+     */
+    @ApiOperation(value = "检查用户账号接口2", notes = "检查该用户是否在6合1系统中存在", produces = "application/json")
+    @RequestMapping(value = "/guavaCache2", method = RequestMethod.GET)
+    public UserModel guavaCache2(UserModel userModel) {
+        return userService.guavaCache(userModel.getId());
     }
 
     /**
