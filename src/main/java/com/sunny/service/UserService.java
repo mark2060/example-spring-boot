@@ -1,10 +1,10 @@
 package com.sunny.service;
 
+import com.alibaba.fastjson.JSON;
 import com.sunny.constant.Constant;
 import com.sunny.dao.UserDao;
 import com.sunny.mapper.UserMapper;
 import com.sunny.model.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
@@ -100,7 +101,7 @@ public class UserService {
 
         ValueOperations<String, UserModel> operations = redisTemplate.opsForValue();
         if (redisTemplate.hasKey(cacheKey)) {
-            redisTemplate.expire(cacheKey,Constant.ONE_HOUR_MILLISECONDS, TimeUnit.MILLISECONDS);
+            redisTemplate.expire(cacheKey, Constant.ONE_HOUR_MILLISECONDS, TimeUnit.MILLISECONDS);
             return operations.get(cacheKey);
         } else {
             UserModel userModel = userDao.selectUserById(userId);
@@ -116,6 +117,25 @@ public class UserService {
         UserModel model = new UserModel();
         model.setId(id);
         return userMapper.selectById(model);
+    }
+
+    /**
+     * 在一个事务中，插入数据再查询，是可以查询出来；
+     * 验证在一个事务中，插入数据还未提交之前，其他线程是查询不出来的
+     *
+     * @param userModel 参数
+     * @return 结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long insert(UserModel userModel) {
+        Long id = userMapper.insert(userModel);
+
+        UserModel model = new UserModel();
+        model.setId(id);
+        UserModel result = userMapper.selectById(model);
+
+        System.out.println("insert user:" + JSON.toJSONString(result));
+        return id;
     }
 
 }

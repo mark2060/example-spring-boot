@@ -24,11 +24,16 @@ public class UserMapper {
     @Resource
     private JdbcTemplate jdbcTemplate;
 
-    public UserModel selectById(UserModel model){
-        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select",model);
+    public Long insert(UserModel model) {
+        sqlSessionTemplate.insert("com.sunny.mapper.UserMapper.insert", model);
+        return model.getId();
     }
 
-    public Long selectCount(){
+    public UserModel selectById(UserModel model) {
+        return sqlSessionTemplate.selectOne("com.sunny.mapper.UserMapper.select", model);
+    }
+
+    public Long selectCount() {
         return jdbcTemplate.queryForObject("select count(1) from t_user", Long.class);
     }
 

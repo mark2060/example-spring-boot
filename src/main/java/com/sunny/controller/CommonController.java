@@ -73,7 +73,7 @@ public class CommonController {
      */
     @RequestMapping(value = "/redis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel redis(Long userId) {
-       return userService.selectUserFromRedis(userId);
+        return userService.selectUserFromRedis(userId);
     }
 
     /**
@@ -93,6 +93,15 @@ public class CommonController {
     @RequestMapping(value = "/mybatis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel mybatis(Long userId) {
         return userService.selectUserById(userId);
+    }
+
+    @RequestMapping(value = "/transactional", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserModel mybatis(UserModel userModel) {
+        Long id = userService.insert(userModel);
+
+        UserModel result = new UserModel();
+        result.setId(id);
+        return result;
     }
 
 }

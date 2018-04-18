@@ -9,6 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 貌似此类需要放在扫描的包的父目录
+ *
+ * @author sunny
+ * @version 1.0.0
+ * @since 2018-04-18
  */
 @Configuration
 @ComponentScan
